@@ -11,6 +11,7 @@ void pirma_strategija(C& studentai, C& v, C& n, double& balas);
 int main()
 {
     int kiek;
+
     // cout << "iveskite pazymiu kieki: ";
      //cin >> paz;
     double balas = 5.00;
