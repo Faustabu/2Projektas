@@ -1,7 +1,7 @@
-﻿#include "studentas.h"
+#include "Studentasclass.h"
 using std::cout;
 using std::cin;
-using std::endl;
+using std::endl; // vietoj vardas -> getVardas;
 
 template<class C>
 void antra_strategija(C& studentai, C& v, double& balas);
@@ -11,7 +11,6 @@ void pirma_strategija(C& studentai, C& v, C& n, double& balas);
 int main()
 {
     int kiek;
-
     // cout << "iveskite pazymiu kieki: ";
      //cin >> paz;
     double balas = 5.00;
@@ -43,76 +42,76 @@ int main()
 
     start = std::chrono::high_resolution_clock::now();
 
-   /* for (const auto& laik : duom) {
-        if (laik.gal < balas) {
-            nuskriaustukai.push_back(laik);
-        }
-        else {
-            galvociai.push_back(laik);
-        }
-    }*/
+    /* for (const auto& laik : duom) {
+         if (laik.gal < balas) {
+             nuskriaustukai.push_back(laik);
+         }
+         else {
+             galvociai.push_back(laik);
+         }
+     }*/
     pirma_strategija(duom, galvociai, nuskriaustukai, balas);
 
     end = std::chrono::high_resolution_clock::now();
     diff = end - start;
-    cout << "Studentu rusiavimas i dvi grupes su list uztruko( su pirma strategija):  " << diff.count() << endl;
+    cout << "Studentu rusiavimas i dvi grupes su list uztruko( 1 str ):  " << diff.count() << endl;
 
     start = std::chrono::high_resolution_clock::now();
-     pavad1 = "nuskriaustukai_" + std::to_string(kiek) + ".txt";
-     std::ofstream nuskr_failas(pavad1);
+    pavad1 = "nuskriaustukai_" + std::to_string(kiek) + ".txt";
+    std::ofstream nuskr_failas(pavad1);
 
 
-     for (const auto& laik : duom)
-     {
-         if (laik.gal < balas) {
-             nuskr_failas << laik.vardas << std::setw(20) << laik.pavarde << std::setw(20) << laik.gal << endl;
-         }
-     }
-   
-
-     end = std::chrono::high_resolution_clock::now();
-     diff = end - start;
-     //cout << "Surūšiuotų studentų išvedimas į failą - nuskriaustukai:  " << diff.count() << endl;
+    for (const auto& laik : duom)
+    {
+        if (laik.gal < balas) {
+            nuskr_failas << laik.getVardas << std::setw(20) << laik.getPavarde << std::setw(20) << laik.getGal << endl;
+        }
+    }
 
 
-
-     start = std::chrono::high_resolution_clock::now();
-
-     pavad2 = "galvociai_" + std::to_string(kiek) + ".txt";
-     std::ofstream galvoc_failas(pavad2);
+    end = std::chrono::high_resolution_clock::now();
+    diff = end - start;
+    //cout << "Surūšiuotų studentų išvedimas į failą - nuskriaustukai:  " << diff.count() << endl;
 
 
-     for (const auto& laik : duom)
-     {
-         if (laik.gal >= balas) {
-             galvoc_failas << laik.vardas << std::setw(20) << laik.pavarde << std::setw(20) << laik.gal << endl;
-         }
-     }
 
-     
-     using std::remove;
-     using std::rename;
-     string pavadinimas = "studentai_" + std::to_string(kiek) + ".txt";
-     //remove(pavadinimas);
-    
+    start = std::chrono::high_resolution_clock::now();
 
-     
-     galvociai.clear();
-     nuskriaustukai.clear();
-
-     end = std::chrono::high_resolution_clock::now();
-     diff = end - start;
-     //cout << "Surūšiuotų studentų išvedimas į failą - galvočiai:  " << diff.count() << endl;
+    pavad2 = "galvociai_" + std::to_string(kiek) + ".txt";
+    std::ofstream galvoc_failas(pavad2);
 
 
-     start = std::chrono::high_resolution_clock::now();
-     antra_strategija(duom, nuskriaustukai, balas);
-     end = std::chrono::high_resolution_clock::now();
-     diff = end - start;
-     cout << "Studentu rusiavimas i dvi grupes su list uztruko( su antra strategija):  " << diff.count() << endl;
-    
-     
-     //---------------------------------------VECTOR-----------------------------------------
+    for (const auto& laik : duom)
+    {
+        if (laik.gal >= balas) {
+            galvoc_failas << laik.getVardas << std::setw(20) << laik.getPavarde << std::setw(20) << laik.getGal << endl;
+        }
+    }
+
+
+    using std::remove;
+    using std::rename;
+    string pavadinimas = "studentai_" + std::to_string(kiek) + ".txt";
+    //remove(pavadinimas);
+
+
+
+    galvociai.clear();
+    nuskriaustukai.clear();
+
+    end = std::chrono::high_resolution_clock::now();
+    diff = end - start;
+    //cout << "Surūšiuotų studentų išvedimas į failą - galvočiai:  " << diff.count() << endl;
+
+
+    start = std::chrono::high_resolution_clock::now();
+    antra_strategija(duom, nuskriaustukai, balas);
+    end = std::chrono::high_resolution_clock::now();
+    diff = end - start;
+    cout << "Studentu rusiavimas i dvi grupes su list uztruko( su antra strategija):  " << diff.count() << endl;
+    duom.clear();
+    nuskriaustukai.clear();
+    //---------------------------------------VECTOR-----------------------------------------
     failo_skaitymas(duomvec, kiek);
 
     start = std::chrono::high_resolution_clock::now();
@@ -120,59 +119,63 @@ int main()
     pirma_strategija(duomvec, galvociaivec, nuskriaustukaivec, balas);
 
 
-    
+
     galvociaivec.clear();
     nuskriaustukaivec.clear();
-    
+
     galvociaivec.shrink_to_fit();
     nuskriaustukaivec.shrink_to_fit();
 
     end = std::chrono::high_resolution_clock::now();
     diff = end - start;
-    cout << "Studentu rusiavimas i dvi grupes su vector uztruko:  " << diff.count() << endl;
+    cout << "Studentu rusiavimas i dvi grupes su vector uztruko ( 1 str):  " << diff.count() << endl;
 
     start = std::chrono::high_resolution_clock::now();
     antra_strategija(duomvec, nuskriaustukaivec, balas);
     end = std::chrono::high_resolution_clock::now();
     diff = end - start;
     cout << "Studentu rusiavimas i dvi grupes su vector uztruko( su antra strategija):  " << diff.count() << endl;
+    duomvec.clear();
+    nuskriaustukaivec.clear();
+    galvociaivec.shrink_to_fit();
+    nuskriaustukaivec.shrink_to_fit();
     //--------------------DEQUE----------------------------------------------
     failo_skaitymas(duomdeq, kiek);
     start = std::chrono::high_resolution_clock::now();
 
     pirma_strategija(duomdeq, galvociaideq, nuskriaustukaideq, balas);
-    
+
     galvociaideq.clear();
     nuskriaustukaideq.clear();
-    
+
     galvociaideq.shrink_to_fit();
     nuskriaustukaideq.shrink_to_fit();
 
     end = std::chrono::high_resolution_clock::now();
     diff = end - start;
-    cout << "Studentu rusiavimas i dvi grupes su deque uztruko:  " << diff.count() << endl;
+    cout << "Studentu rusiavimas i dvi grupes su deque uztruko( 1 str ):  " << diff.count() << endl;
 
     start = std::chrono::high_resolution_clock::now();
     antra_strategija(duomdeq, nuskriaustukaideq, balas);
     end = std::chrono::high_resolution_clock::now();
     diff = end - start;
     cout << "Studentu rusiavimas i dvi grupes su deque uztruko( su antra strategija):  " << diff.count() << endl;
+    duomdeq.clear();
+    nuskriaustukaideq.shrink_to_fit();
+    nuskriaustukaideq.clear();
+    duomdeq.shrink_to_fit();
+
+
 }
 
-studentas get(list<studentas> lst, int d) {
-    list<studentas>::iterator itr = lst.begin();
-    for (int i = 0; i < d; i++) ++itr;
-
-    return *itr;
-}
 
 
 template<class C>
-void antra_strategija(C & studentai, C & v, double& balas) {
+void antra_strategija(C& studentai, C& v, double& balas) {
     for (auto it = studentai.begin(); it != studentai.end();) {
-        if (it->gal < balas){
+        if (it->gal < balas) {
             v.push_back(*it);
-           it = studentai.erase(it);
+            it = studentai.erase(it);
         }
         else { it++; }
     }
@@ -180,19 +183,20 @@ void antra_strategija(C & studentai, C & v, double& balas) {
 }
 
 template<class C>
-void pirma_strategija (C& studentai, C& v, C& n, double& balas) {
+void pirma_strategija(C& studentai, C& v, C& n, double& balas) {
     for (auto it = studentai.begin(); it != studentai.end(); it++) {
         if (it->gal >= balas) {
             v.push_back(*it);
-            
+
         }
-        else { 
-            n.push_back(*it); }
+        else {
+            n.push_back(*it);
+        }
 
     }
 
 }
- 
+
 
 void failo_skaitymas(list<studentas>& kint, int kiek) {
     int stud = 0;
@@ -211,9 +215,8 @@ void failo_skaitymas(list<studentas>& kint, int kiek) {
         {
             //kint.resize(kint.size() + 1);
             studentas student;
-            skaitymas >> student.vardas;
-            skaitymas >> student.pavarde;
-            skaitymas >> student.gal;
+            student.failo_nuskaitymas(skaitymas);
+            
             kint.push_back(student);
             stud += 1;
         }
@@ -238,9 +241,7 @@ void failo_skaitymas(vector<studentas>& kint, int kiek) {
         {
             kint.resize(kint.size() + 1);
 
-            skaitymas >> kint.at(stud).vardas;
-            skaitymas >> kint.at(stud).pavarde;
-            skaitymas >> kint.at(stud).gal;
+            student.failo_nuskaitymas(skaitymas);
             stud += 1;
         }
     }
@@ -265,9 +266,7 @@ void failo_skaitymas(deque<studentas>& kint, int kiek) {
         {
             kint.resize(kint.size() + 1);
 
-            skaitymas >> kint.at(stud).vardas;
-            skaitymas >> kint.at(stud).pavarde;
-            skaitymas >> kint.at(stud).gal;
+            student.failo_nuskaitymas(skaitymas);
             stud += 1;
         }
     }
